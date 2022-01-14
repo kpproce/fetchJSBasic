@@ -9,12 +9,13 @@
 <body>
   <div id="menu">
     <h1>Roep server aan met FETCH en toon responce</h1>
-
+    <span id="location"> locatie van dit bestand</span>
+    
     <!-- ************************************************************* 
          ******** In dit voorbeeld wordt GEEN FORM gebruikt  ********* 
          ******** dus ook geen submit, wel input             ********* 
          ************************************************************* -->
-
+         
     <table>
       <tr>
         <td>code</td>   
@@ -51,16 +52,21 @@
     <a href="https://www.javascripttutorial.net/javascript-fetch-api/" target="_blank"> Klik hier voor meer info over FETCH</a>
   </footer>
 
-
   <script>
+
+    // *******************************************************************
+    // **** werk je localhost of online op silvermusic.nl (van Proce) ****
+    // *******************************************************************
   
-    // ***************************************************************
-    // *******************   HET FETCH DEEL **************************
-    // ***************************************************************
-  
-    const urlPathOnline = '';
-    const urlPath= 'http://localhost/php_api_test/apiAstrumBasic/';
-  
+    let urlPath = '';
+    if (location.hostname==' silvermusic.nl') {
+      document.getElementById("location").innerHTML = "Dit bestand staat online op " + location.host;
+    } else {
+      urlPath= 'http://localhost/php_api_test/apiAstrumBasic/';
+      document.getElementById("location").innerHTML = "Dit HTML bestand staat lokaal: " 
+      + location;
+    }
+
     const urlGET =  urlPath + 'api_server_basic_get.php';
     const urlPOST = urlPath + 'api_server_basic_post.php';
 
@@ -85,7 +91,6 @@
   
     async function fetchDataGet() {
      
-      alert(urlPOST);
       document.getElementById("toelichting").innerHTML = 
         "De aanroep naar de server is via GET gedaan. <br>Er zijn WEL parameters meegestuurd (achter de URL geplakt)<br>De data/tekst hieronder komt van de server, die kan overal staan. ";
 
