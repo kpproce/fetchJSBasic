@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="menu">
+    <h1>Roep server aan met FETCH en toon responce</h1>
+
+    <!-- ************************************************************* 
+         ******** In dit voorbeeld wordt GEEN FORM gebruikt  ********* 
+         ******** dus ook geen submit, wel input             ********* 
+         ************************************************************* -->
+
+    <table>
+      <tr>
+        <td>code</td>   
+        <td><input id="code" value="admi"></td>
+      </tr>
+      <tr>
+        <td>nummer</td>   
+        <td><input id="nummer" value="12"></td>
+      </tr>
+    </table>
+    <br> 
+      <iframe src="readme.txt" id="readmeIframe"></iframe>
+      
+     <br>
+      <button onclick="fetchData()">fetch data zonder pararmeter</button>
+      <button onclick="fetchDataGet()">fetch data met GET parameters</button>
+      <button onclick="fetchDataPost()">fetch data met POST parameters</button>
+  </div>
+  <br>
+  <div class="label">
+    Toelichting:
+  </div>
+  <div id="toelichting">  <!-- hier wordt de response ingezet-->
+    Met de knoppen kun je op verschilende manieren data ophalen. <br>Met GET of POST. <br>Met of zonder meesturen van parameters
+  </div>
+  <div class="label">
+    Data/tekst van Server gekregen:
+  </div>
+  <div id="content">  <!-- hier wordt de response ingezet-->
+    data
+  </div>
+  <br>
+  <footer>
+    <a href="https://www.javascripttutorial.net/javascript-fetch-api/" target="_blank"> Klik hier voor meer info over FETCH</a>
+  </footer>
+
+
+  <script>
+  
+    // ***************************************************************
+    // *******************   HET FETCH DEEL **************************
+    // ***************************************************************
+  
+    const urlPath = 'http://localhost/php_api_test/apiAstrumBasic/';
+    const urlGET =  urlPath + 'api_server_basic_get.php';
+    const urlPOST = urlPath + 'api_server_basic_post.php';
+
+    // ***************************************************************
+    // ************** GET FETCH zonder PARAMETER *********************
+    // ***************************************************************   
+   
+    async function fetchData() {
+      document.getElementById("toelichting").innerHTML = 
+        "De aanroep naar de server is via GET gedaan. <br>Er zijn GEEN parameters meegestuurd (in de URL, dus geen ?)<br>De data/tekst hieronder komt van de server, die kan overal staan. ";
+
+      let response = await fetch(urlGET);
+      let responseData = await response.text();
+      document.getElementById("content").innerHTML=responseData;
+    };
+
+    
+    // ***************************************************************
+    // ************** GET FETCH MET PARAMETER ************************
+    // ***************************************************************   
+   
+  
+    async function fetchDataGet() {
+     
+      document.getElementById("toelichting").innerHTML = 
+        "De aanroep naar de server is via GET gedaan. <br>Er zijn WEL parameters meegestuurd (achter de URL geplakt)<br>De data/tekst hieronder komt van de server, die kan overal staan. ";
+
+      code   = document.getElementById("code").value; 
+      nummer = document.getElementById("nummer").value;
+
+      let urlGETParam = urlGET + "?code=" + code +"&nummer=" + nummer;
+      
+      let response = await fetch(urlGETParam);
+      let responseData = await response.text();
+    
+      console.log(responseData);
+
+      document.getElementById("content").innerHTML = responseData;
+    };
+
+    // ***************************************************************
+    // ************** POST FETCH MET PARAMETER ************************
+    // ***************************************************************   
+
+
+    async function fetchDataPost(code, nummer) {
+      
+      document.getElementById("toelichting").innerHTML = 
+        "De aanroep naar de server is via POST gedaan. <br>Er zijn WEL parameters meegestuurd (bij POST zie je die niet)<br>De data/tekst hieronder komt van de server, die kan overal staan. ";
+
+      let formData = new FormData();
+      formData.append('code', document.getElementById("code").value);
+      formData.append('nummer', document.getElementById("nummer").value);
+      // op deze manier kun je ook formulier data meegeven.
+      
+      let response = await fetch(urlPOST,
+        {
+            body: formData,
+            method: "post"
+        });
+      
+      let responseData = await response.text(); 
+      // dit gebeurt dus pas als de data binnenkomt
+
+      document.getElementById("content").innerHTML = responseData;
+
+    };
+
+  </script>
+
+</body>
+</html>

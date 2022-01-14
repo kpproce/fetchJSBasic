@@ -1,0 +1,11 @@
+Dit gaat over: er voor zorgen dat je code op GITHUB komt te staat vanuit VS code
+
+https://www.youtube.com/watch?v=3Tn58KQvWtU&ab_channel=DevWorld
+
+a) Open in VScode de map waar deze code staat
+b) In VS code, zet terminal aan. 
+
+Stap 1: voeg git toe aan je project in VS code
+Stap 2: Maak een repository aan op github.com
+Stap 3: Linl deze aan elkaat in VS code
+Stap 4 (herhaal voor update) push code naar github repository
