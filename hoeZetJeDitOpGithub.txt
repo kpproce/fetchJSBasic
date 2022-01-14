@@ -11,7 +11,7 @@ Dit is wat je te zien krijgt bij github na aanmaken van repository
 Die commandos voer ik (deels) )uit in de terminal
 
 
-echo "# fetchJSBasic" >> README.md
+echo "# fetchJSBasic" >> README.md 
 git init
 git add README.md
 git commit -m "first commit"
