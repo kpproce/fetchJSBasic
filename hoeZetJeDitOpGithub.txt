@@ -1,11 +1,21 @@
 Dit gaat over: er voor zorgen dat je code op GITHUB komt te staat vanuit VS code
 
-https://www.youtube.com/watch?v=3Tn58KQvWtU&ab_channel=DevWorld
 
 a) Open in VScode de map waar deze code staat
 b) In VS code, zet terminal aan. 
 
-Stap 1: voeg git toe aan je project in VS code
-Stap 2: Maak een repository aan op github.com
-Stap 3: Linl deze aan elkaat in VS code
-Stap 4 (herhaal voor update) push code naar github repository
+Maak een repository aan op github.com
+
+
+Dit is wat je te zien krijgt bij github na aanmaken van repository
+Die commandos voer ik (deels) )uit in de terminal
+
+
+echo "# fetchJSBasic" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/kpproce/fetchJSBasic.git
+git push -u origin main
+
