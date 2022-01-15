@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="menu">
+    <h1>Roep server aan met FETCH en toon responce</h1>
+    <span id="location"> locatie van dit bestand</span>
+    
+    <!-- *********************************************************************************** 
+         ********   In dit voorbeeld wordt FORM gebruikt                            ******** 
+         ********   De submit wordt afgevangen en je stuurt data door naar FETCH    ******** 
+         *********************************************************************************** -->
+         
+    <form method="POST" action="myapi/send" onsubmit="send(event,this)">
+      <input hidden name="token" value="Astrum2022">
+      <input name="code" value="admi">
+      <input name="nummer" value="78">
+      <input type="submit">    
+    </form>
+    
+    <br> 
+    <iframe src="readmeFetchForm.txt" id="readmeIframe"></iframe> 
+    <br>
+  </div>
+
+  <div class="label">
+    Toelichting:
+  </div>
+  <div id="toelichting">  <!-- hier wordt de response ingezet-->
+    Dit formulier wordt via submit eerste uitgelezen en dan met fetch verstuurd naar een API. <br>
+    Dus NIET de standaard manier verstuurd. 
+  </div>
+  <div class="label">
+    Data/tekst van Server gekregen:
+  </div>
+  <div id="content">  <!-- hier wordt de response ingezet-->
+    data
+  </div>
+  <br>
+  <footer>
+    <a href="https://www.javascripttutorial.net/javascript-fetch-api/" target="_blank"> Klik hier voor meer info over FETCH</a>
+  </footer>
+
+  <script>
+
+    // *******************************************************************
+    // **** werk je localhost of online op silvermusic.nl (van Proce) ****
+    // *******************************************************************
+  
+    let urlPath = '';
+    if (location.hostname=='silvermusic.nl') {
+      document.getElementById("location").innerHTML = "Dit HTML bestand staat online op " + location.host;
+    } else {
+      urlPath= 'http://localhost/php_api_test/apiAstrumBasic/';
+      document.getElementById("location").innerHTML = "Dit HTML bestand staat lokaal: " 
+      + location;
+    }
+
+    const urlPOST = urlPath + 'api_server_basic_Formpost.php';
+
+
+    // ***************************************************************
+    // ***** POST FETCH MET PARAMETERS auto uitlezen  ****************
+    // ***************************************************************   
+
+    async function fetchDataPost() {
+      
+      document.getElementById("toelichting").innerHTML = 
+        "FORM automatisch uitgelezen <br>De POST API is aangeroepen met FETCH";
+
+      let formData = new FormData();
+      formData.append('code', document.getElementById("code").value);
+      formData.append('nummer', document.getElementById("nummer").value);
+      // op deze manier kun je ook formulier data meegeven.
+      
+      let response = await fetch(urlPOST,
+        {
+            body: formData,
+            method: "post"
+        });
+      
+      let responseData = await response.text(); 
+      // dit gebeurt dus pas als de data binnenkomt
+
+      document.getElementById("content").innerHTML = responseData;
+
+    };
+
+  </script>
+
+</body>
+</html>
