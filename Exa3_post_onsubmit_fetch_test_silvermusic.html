@@ -1,0 +1,47 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .xlarge { font-size: x-large}
+</style>
+
+</head>
+
+<body>
+  <h1> post onsubmit fetch via silvermusic werkend</h1>
+  <form id="formElem" name="formElem" onsubmit=submitForm(event)>
+    <input type="text" name="toegangsCode" value="Astrum2021">
+    <input type="text" name="test" value="test">
+    <button type="submit">Submit</button>
+  </form>
+  <script type="text/JavaScript">
+
+    async function submitForm(event){
+      event.preventDefault();
+      //window.history.back();
+
+      data = new FormData(formElem);
+
+      let response = await fetch('https://silvermusic.nl/astrum/readFormLiveExamplePRK.php', {
+        method: 'POST',
+        body: new FormData(formElem)
+      });
+  
+      // let result = await response.json();
+      let result = await response.text();
+
+      // alert(result);
+
+  
+      document.getElementById("content").innerHTML=result;
+    }
+  </script>
+
+  <div id="content">
+    Geen data, klik op submit
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .xlarge { font-size: x-large}
+</style>
+
+</head>
+
+<body>
+  <h1>fetch arrow</h1>
+  <form id="formElem">
+    <input type="text" name="toegangsCode" value="Astrum2021">   
+    <input type="text" name="name" value="John">
+    <input type="text" name="surname" value="Smith">
+    <input type="submit">
+  </form>
+  <div id="content" class="xlarge">
+    Klik op submit om data op te halen
+  </div>
+  <script>
+
+    formElem.onsubmit = async (e) => {
+      e.preventDefault();
+      data = new FormData(formElem);
+      let response = await fetch('https://silvermusic.nl/astrum/readFormLiveExamplePRK.php', {
+        method: 'post',
+        body: data
+      });
+  
+      // let result = await response.json();
+      let result = await response.text();
+      // alert(result)
+      document.getElementById("content").innerHTML=result;
+    };
+  </script>
+
+</body>
+</html>

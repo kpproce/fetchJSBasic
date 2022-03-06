@@ -1,0 +1,71 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    #content {
+      padding: 10px; margin-top:15px;font-size: x-large;
+    }
+    .xlarge { font-size: x-large}
+</style>
+
+</head>
+
+<body>
+  <h1> GET onsubmit fetch vanuit Form via silvermusic werkend</h1>
+  <form id="formElem" name="formElem" onsubmit=submitForm(event)>
+    <input type="text" name="toegangsCode" value="Astrum2021">
+    <input type="text" name="gender" value="m">
+    <button type="submit">Submit</button>
+  </form>
+  <script type="text/JavaScript">
+
+    url = 'https://silvermusic.nl/astrum/readFormLiveExamplePRK.php';   
+    urlGet = "";
+
+    // ********************   GET is Anders  ********************
+    // 
+    //  Bij get moet je de parameters lezen uit het formuier en die in de URL plakken/ 
+    //  Ik (prk) heb nog geen eenvoudigere manier ontdenkt (maart 22). 
+    //
+    // **********************************************************
+
+    function createUrlGet(event) { // mdeze functie maakt het parameterdeel van de get, uit het formulier
+      const formData = new FormData(event.target)
+      toevoeg=""; 
+      for(var pair of formData.entries()) {
+        if (toevoeg=="") {
+          toevoeg += pair[0]+ '='+ pair[1]   // eerste get param bijv: ?toegangsCode=Astrum2021
+        } else {
+          toevoeg += "&" + pair[0]+ '='+ pair[1] // volgende get param bijv: ?gender=m
+        }
+        console.log(pair[0]+ ', '+ pair[1])  // voor controle wat in je form staat
+      }
+      return toevoeg
+    }
+
+    async function submitForm(event){
+      event.preventDefault()
+      //window.history.back();
+
+      urlGet =url + "?" + createUrlGet(event)
+      // alert("urlGet: " + urlGet)
+
+      let response = await fetch(urlGet, {
+        method: 'GET'
+      });
+
+      // let result = await response.json();
+      let result = await response.text(); // hiermee kun je het resut als text gebruiken
+
+      document.getElementById("content").innerHTML=result; // toon result 
+    }
+  </script>
+
+  <div id="content">
+    Geen data, klik op submit
+  </div>
+
+</body>
+</html>
